@@ -9,12 +9,13 @@ gem 'rails', '~> 5.2.8', '>= 5.2.8.1'
 gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
 gem 'puma', '~> 3.11'
+gem 'pry', '~> 0.13.1'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # gem 'jbuilder', '~> 2.5'
 # Use Redis adapter to run Action Cable in production
-# gem 'redis', '~> 4.0'
+gem 'redis', '~> 4.0'
 # Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
+gem 'bcrypt', '~> 3.1.7'
 
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
@@ -24,12 +25,22 @@ gem 'puma', '~> 3.11'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
+gem 'rack-cors'
+gem 'jwt_sessions', '~> 2.3'
+gem 'byebug'
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 # gem 'rack-cors'
 
 group :development, :test do
   gem 'rspec-rails'
+  gem 'simplecov', require: false
+  gem 'shoulda-matchers', '~> 3.0', require: false
+  gem 'factory_bot_rails', '4.11.1'
+end
+
+group :development do
+    gem 'faker'
 end
 
 group :development do
