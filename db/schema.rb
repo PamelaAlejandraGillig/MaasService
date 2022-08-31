@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_08_28_142549) do
+ActiveRecord::Schema.define(version: 2022_08_31_171151) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,26 +32,15 @@ ActiveRecord::Schema.define(version: 2022_08_28_142549) do
     t.index ["company_id"], name: "index_contracts_on_company_id"
   end
 
-  create_table "employees", force: :cascade do |t|
-    t.string "first_name"
-    t.string "last_name"
-    t.string "color"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "user_id"
-    t.index ["user_id"], name: "index_employees_on_user_id"
-  end
-
   create_table "registrations", force: :cascade do |t|
     t.datetime "date_from"
     t.datetime "date_end"
-    t.bigint "employee_id"
+    t.bigint "user_id"
     t.bigint "turn_id"
-    t.decimal "total"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["employee_id"], name: "index_registrations_on_employee_id"
     t.index ["turn_id"], name: "index_registrations_on_turn_id"
+    t.index ["user_id"], name: "index_registrations_on_user_id"
   end
 
   create_table "turns", force: :cascade do |t|
@@ -65,14 +54,15 @@ ActiveRecord::Schema.define(version: 2022_08_28_142549) do
 
   create_table "users", force: :cascade do |t|
     t.string "email", null: false
+    t.string "full_name", null: false
+    t.string "color", null: false
     t.string "password_digest", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   add_foreign_key "contracts", "companies"
-  add_foreign_key "employees", "users"
-  add_foreign_key "registrations", "employees"
   add_foreign_key "registrations", "turns"
+  add_foreign_key "registrations", "users"
   add_foreign_key "turns", "contracts"
 end

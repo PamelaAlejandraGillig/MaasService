@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Api
   module V1
     class ContractsController < ApplicationController
@@ -5,8 +7,8 @@ module Api
       before_action :set_contract, only: [:show]
 
       def index
-        @contract = Contract.all
-        render json: @contract
+        @contracts = Contract.where('company_id = ?', params[:company_id])
+        render json: @contracts
       end
 
       def show

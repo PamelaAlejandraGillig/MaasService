@@ -2,21 +2,24 @@
 
 company = Company.create(name: 'Recorrido.cl')
 
-Employee.create([
+User.create([
                   {
-                    first_name: 'Ernesto',
-                    last_name: 'Perez',
-                    color: '#66CDAA'
+                    email: 'ernesto@gmail.com',
+                    full_name: 'Ernesto P.',
+                    color: '#66CDAA',
+                    password_digest: '$2a$12$uhWNpyI8I04hDldW6iPOXuT6KmxOc2Ojk1Kuw5GQ5rvIZEzNGrQ/.'
                   },
                   {
-                    first_name: 'Barbara',
-                    last_name: 'Sanchez',
-                    color: '#FFB6C1'
+                    email: 'barbara@gmail.com',
+                    full_name: 'Barbara s.',
+                    color: '#FFB6C1',
+                    password_digest: '$2a$12$uhWNpyI8I04hDldW6iPOXuT6KmxOc2Ojk1Kuw5GQ5rvIZEzNGrQ/.'
                   },
                   {
-                    first_name: 'Benjamin',
-                    last_name: 'Martinez',
-                    color: '#6495ED'
+                    email: 'benjamin@gmail.com',
+                    full_name: 'Benjamin j.',
+                    color: '#6495ED',
+                    password_digest: '$2a$12$uhWNpyI8I04hDldW6iPOXuT6KmxOc2Ojk1Kuw5GQ5rvIZEzNGrQ/.'
                   }
                 ])
 

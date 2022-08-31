@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Api::V1::ContractsController, type: :controller do
+RSpec.describe Api::V1::TurnsController, type: :controller do
   let(:user) { FactoryBot.create(:user) }
 
   before do
@@ -13,26 +13,32 @@ RSpec.describe Api::V1::ContractsController, type: :controller do
 
   let(:company) { FactoryBot.create(:company) }
   let(:contract) { FactoryBot.create(:contract, company: company) }
+  let(:turn) { FactoryBot.create(:turn, contract: contract, week: 14) }
+  let(:registration) { FactoryBot.create(:registration, turn: turn, user: user) }
 
-  describe 'GET #index' do
+  describe 'GET #get_turns' do
     it 'returns http success' do
       request.cookies[JWTSessions.access_cookie] = @tokens[:access]
-      params = { company_id: contract.company_id }
-      get :index, params: params, format: :json
+      params = { id: contract.id }
+      get :get_turns, params: params, format: :json
       expect(response).to have_http_status(:success)
     end
     it 'unauth without cookie' do
-      get :index
+      get :get_turns
       expect(response).to have_http_status(401)
     end
   end
 
-  describe 'GET #show' do
+  describe 'GET #get_turns' do
     it 'returns http success' do
       request.cookies[JWTSessions.access_cookie] = @tokens[:access]
-      params = { id: contract.id }
-      get :show, params: params, format: :json
+      params = { id: turn.id }
+      get :shifts_available, params: params, format: :json
       expect(response).to have_http_status(:success)
+    end
+    it 'unauth without cookie' do
+      get :shifts_available
+      expect(response).to have_http_status(401)
     end
   end
 end

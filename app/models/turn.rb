@@ -1,8 +1,12 @@
+# frozen_string_literal: true
+
 class Turn < ApplicationRecord
   belongs_to :contract
+  validates :period, presence: true
+  validates :week, presence: true
 
   def get_shifts
-    @days = [{ period: contract.start }]
+    @days = [{ period: contract.start, name: contract.name, week: week, id: id }]
     period.each do |day, hours|
       @hours = []
       @days << { day: day, record: @hours }
@@ -13,9 +17,9 @@ class Turn < ApplicationRecord
 
         if record.present?
           hour = record.date_from.to_s(:time)
-          @hours << { time: time, employee: record.employee.last_name } if hour.to_i == time
+          @hours << { time: time, user: record.user.full_name, color: record.user.color } if hour.to_i == time
         else
-          @hours << { time: time, employee: '' }
+          @hours << { time: time, user: '', color: '' }
         end
       end
     end

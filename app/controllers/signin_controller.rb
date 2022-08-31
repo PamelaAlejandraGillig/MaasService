@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 class SigninController < ApplicationController
   before_action :authorize_access_request!, only: [:destroy]
   before_action :set_user, only: [:create]
 
   def create
-    if @user.authenticate(params[:password])
+    if @user.authenticate(user_params[:password])
       payload = { user_id: @user.id }
       session = JWTSessions::Session.new(payload: payload, refresh_by_access_allowed: true)
       tokens = session.login
@@ -17,8 +19,12 @@ class SigninController < ApplicationController
     end
   end
 
+  def user_params
+    params.permit(:email, :password)
+  end
+
   def destroy
-    session = JWTSessions::Session.new(payload: payload)
+    session = JWTSessions::Session.new(payload: payload, namespace: "user_#{payload['user_id']}")
     session.flush_by_access_payload
     render json: :ok
   end
@@ -26,7 +32,7 @@ class SigninController < ApplicationController
   private
 
   def set_user
-    @user = User.find_by!(email: params[:email])
+    @user = User.find_by!(email: user_params[:email])
   end
 
   def not_found
